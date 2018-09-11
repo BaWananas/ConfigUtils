@@ -1,6 +1,10 @@
 package reader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import rawElements.Setting;
 import rawElements.SettingBlock;
@@ -8,16 +12,34 @@ import rawElements.SettingBlock;
 public class Reader {
 	
 	private File textFile;
-	private SettingBlock settings;
 	
 	public Reader(File textFile)
 	{
 		this.textFile = textFile;
 	}
 	
-	public SettingBlock read()
+	public SettingBlock read(File file) throws IOException
 	{
-		return null;
+		ArrayList<Setting> settings = new ArrayList<Setting>();
+		
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		String str;
+		
+		while ((str=reader.readLine()) != null)
+		{
+			settings.add(this.rowToSetting(str));
+		}
+		
+		if (settings.isEmpty())
+		{
+			return null;
+		}
+		else 
+		{
+			Setting[] tmp = null;
+			settings.toArray(tmp);
+			return new SettingBlock(tmp);
+		}
 	}
 	
 	private Setting rowToSetting(String row)
@@ -34,7 +56,9 @@ public class Reader {
 		}
 		
 		return new Setting("null", "null");
-		
 	}
+	
+	
+	
 
 }
