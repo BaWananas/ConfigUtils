@@ -24,6 +24,17 @@ public class Reader {
 	{
 		String str[];
 		str = row.split("=");
+		if (str[0] != null && str[1] != null)
+		{
+			return new Setting(str[0], str[1]);
+		}
+		else if (str[0] != null && str[1] == null)
+		{
+			return new Setting(str[0], "null");
+		}
+		
+		return new Setting("null", "null");
+		
 	}
 
 }
