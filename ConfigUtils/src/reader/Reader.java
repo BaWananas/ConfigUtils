@@ -36,7 +36,7 @@ public class Reader {
 		}
 		else 
 		{
-			Setting[] tmp = null;
+			Setting[] tmp = new Setting[settings.size()];
 			settings.toArray(tmp);
 			return new SettingBlock(tmp);
 		}
@@ -46,13 +46,24 @@ public class Reader {
 	{
 		String str[];
 		str = row.split("=");
-		if (str[0] != null && str[1] != null)
+
+		if (str.length >= 2)
 		{
-			return new Setting(str[0], str[1]);
+			if (!str[0].isEmpty() && !str[1].isEmpty())
+			{
+				return new Setting(str[0], str[1]);
+			}
+			else if (!str[0].isEmpty() && str[1].isEmpty())
+			{
+				return new Setting(str[0], "null");
+			}
 		}
-		else if (str[0] != null && str[1] == null)
+		else if (str.length == 1) 
 		{
-			return new Setting(str[0], "null");
+			if (str[0] != null)
+			{
+				return new Setting(str[0], "null");
+			}
 		}
 		
 		return new Setting("null", "null");
