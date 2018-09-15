@@ -60,6 +60,7 @@ public class Reader {
 			}
 			
 		}
+		reader.close();
 		
 		if (settings.isEmpty())
 		{
